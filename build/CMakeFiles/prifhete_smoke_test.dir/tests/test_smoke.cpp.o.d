@@ -756,6 +756,7 @@ CMakeFiles/prifhete_smoke_test.dir/tests/test_smoke.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/cstdarg \
   /Users/varun/Documents/prifhete-openfhe/src/fhe/binfhe_context.h \
+  /Users/varun/Documents/prifhete-openfhe/src/fhe/bit_value.h \
   /Users/varun/Documents/prifhete-openfhe/src/protocol/key_generation.h \
   /Users/varun/Documents/prifhete-openfhe/src/protocol/registration.h \
   /Users/varun/Documents/prifhete-openfhe/src/state/plaintext_model.h \

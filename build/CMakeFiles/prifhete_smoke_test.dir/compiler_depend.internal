@@ -784,6 +784,7 @@ CMakeFiles/prifhete_smoke_test.dir/tests/test_smoke.cpp.o
  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdint.h
  /Users/varun/Documents/prifhete-openfhe/src/common/types.h
  /Users/varun/Documents/prifhete-openfhe/src/fhe/binfhe_context.h
+ /Users/varun/Documents/prifhete-openfhe/src/fhe/bit_value.h
  /Users/varun/Documents/prifhete-openfhe/src/protocol/key_generation.h
  /Users/varun/Documents/prifhete-openfhe/src/protocol/registration.h
  /Users/varun/Documents/prifhete-openfhe/src/state/plaintext_model.h

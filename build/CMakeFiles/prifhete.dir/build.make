@@ -184,10 +184,24 @@ CMakeFiles/prifhete.dir/src/proof/proof_api.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/prifhete.dir/src/proof/proof_api.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/varun/Documents/prifhete-openfhe/src/proof/proof_api.cpp -o CMakeFiles/prifhete.dir/src/proof/proof_api.cpp.s
 
+CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o: CMakeFiles/prifhete.dir/flags.make
+CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o: /Users/varun/Documents/prifhete-openfhe/src/fhe/circuits.cpp
+CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o: CMakeFiles/prifhete.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o -MF CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o.d -o CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o -c /Users/varun/Documents/prifhete-openfhe/src/fhe/circuits.cpp
+
+CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/varun/Documents/prifhete-openfhe/src/fhe/circuits.cpp > CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.i
+
+CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/varun/Documents/prifhete-openfhe/src/fhe/circuits.cpp -o CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.s
+
 CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o: CMakeFiles/prifhete.dir/flags.make
 CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o: /Users/varun/Documents/prifhete-openfhe/src/fhe/binfhe_context.cpp
 CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o: CMakeFiles/prifhete.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o -MF CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o.d -o CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o -c /Users/varun/Documents/prifhete-openfhe/src/fhe/binfhe_context.cpp
 
 CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.i: cmake_force
@@ -201,7 +215,7 @@ CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.s: cmake_force
 CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o: CMakeFiles/prifhete.dir/flags.make
 CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o: /Users/varun/Documents/prifhete-openfhe/src/wkenc/wkenc.cpp
 CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o: CMakeFiles/prifhete.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o -MF CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o.d -o CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o -c /Users/varun/Documents/prifhete-openfhe/src/wkenc/wkenc.cpp
 
 CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.i: cmake_force
@@ -215,7 +229,7 @@ CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.s: cmake_force
 CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o: CMakeFiles/prifhete.dir/flags.make
 CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o: /Users/varun/Documents/prifhete-openfhe/src/commit/commitment.cpp
 CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o: CMakeFiles/prifhete.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o -MF CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o.d -o CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o -c /Users/varun/Documents/prifhete-openfhe/src/commit/commitment.cpp
 
 CMakeFiles/prifhete.dir/src/commit/commitment.cpp.i: cmake_force
@@ -229,7 +243,7 @@ CMakeFiles/prifhete.dir/src/commit/commitment.cpp.s: cmake_force
 CMakeFiles/prifhete.dir/src/prf/prf.cpp.o: CMakeFiles/prifhete.dir/flags.make
 CMakeFiles/prifhete.dir/src/prf/prf.cpp.o: /Users/varun/Documents/prifhete-openfhe/src/prf/prf.cpp
 CMakeFiles/prifhete.dir/src/prf/prf.cpp.o: CMakeFiles/prifhete.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/prifhete.dir/src/prf/prf.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/prifhete.dir/src/prf/prf.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/prifhete.dir/src/prf/prf.cpp.o -MF CMakeFiles/prifhete.dir/src/prf/prf.cpp.o.d -o CMakeFiles/prifhete.dir/src/prf/prf.cpp.o -c /Users/varun/Documents/prifhete-openfhe/src/prf/prf.cpp
 
 CMakeFiles/prifhete.dir/src/prf/prf.cpp.i: cmake_force
@@ -243,7 +257,7 @@ CMakeFiles/prifhete.dir/src/prf/prf.cpp.s: cmake_force
 CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o: CMakeFiles/prifhete.dir/flags.make
 CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o: /Users/varun/Documents/prifhete-openfhe/src/merkle/merkle_tree.cpp
 CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o: CMakeFiles/prifhete.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o -MF CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o.d -o CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o -c /Users/varun/Documents/prifhete-openfhe/src/merkle/merkle_tree.cpp
 
 CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.i: cmake_force
@@ -264,6 +278,7 @@ prifhete_OBJECTS = \
 "CMakeFiles/prifhete.dir/src/protocol/process_transaction.cpp.o" \
 "CMakeFiles/prifhete.dir/src/protocol/update_ciphertext.cpp.o" \
 "CMakeFiles/prifhete.dir/src/proof/proof_api.cpp.o" \
+"CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o" \
 "CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o" \
 "CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o" \
 "CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o" \
@@ -281,6 +296,7 @@ libprifhete.a: CMakeFiles/prifhete.dir/src/protocol/transfer.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/src/protocol/process_transaction.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/src/protocol/update_ciphertext.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/src/proof/proof_api.cpp.o
+libprifhete.a: CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/src/commit/commitment.cpp.o
@@ -288,7 +304,7 @@ libprifhete.a: CMakeFiles/prifhete.dir/src/prf/prf.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/src/merkle/merkle_tree.cpp.o
 libprifhete.a: CMakeFiles/prifhete.dir/build.make
 libprifhete.a: CMakeFiles/prifhete.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX static library libprifhete.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX static library libprifhete.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/prifhete.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/prifhete.dir/link.txt --verbose=$(VERBOSE)
 

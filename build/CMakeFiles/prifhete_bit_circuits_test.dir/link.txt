@@ -1,0 +1,1 @@
+/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/prifhete_bit_circuits_test.dir/tests/test_bit_circuits.cpp.o -o prifhete_bit_circuits_test  libprifhete.a

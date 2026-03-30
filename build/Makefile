@@ -165,6 +165,19 @@ prifhete_plaintext_model_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_plaintext_model_test.dir/build.make CMakeFiles/prifhete_plaintext_model_test.dir/build
 .PHONY : prifhete_plaintext_model_test/fast
 
+#=============================================================================
+# Target rules for targets named prifhete_bit_circuits_test
+
+# Build rule for target.
+prifhete_bit_circuits_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 prifhete_bit_circuits_test
+.PHONY : prifhete_bit_circuits_test
+
+# fast build rule for target.
+prifhete_bit_circuits_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_bit_circuits_test.dir/build.make CMakeFiles/prifhete_bit_circuits_test.dir/build
+.PHONY : prifhete_bit_circuits_test/fast
+
 src/commit/commitment.o: src/commit/commitment.cpp.o
 .PHONY : src/commit/commitment.o
 
@@ -212,6 +225,30 @@ src/fhe/binfhe_context.s: src/fhe/binfhe_context.cpp.s
 src/fhe/binfhe_context.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete.dir/build.make CMakeFiles/prifhete.dir/src/fhe/binfhe_context.cpp.s
 .PHONY : src/fhe/binfhe_context.cpp.s
+
+src/fhe/circuits.o: src/fhe/circuits.cpp.o
+.PHONY : src/fhe/circuits.o
+
+# target to build an object file
+src/fhe/circuits.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete.dir/build.make CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.o
+.PHONY : src/fhe/circuits.cpp.o
+
+src/fhe/circuits.i: src/fhe/circuits.cpp.i
+.PHONY : src/fhe/circuits.i
+
+# target to preprocess a source file
+src/fhe/circuits.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete.dir/build.make CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.i
+.PHONY : src/fhe/circuits.cpp.i
+
+src/fhe/circuits.s: src/fhe/circuits.cpp.s
+.PHONY : src/fhe/circuits.s
+
+# target to generate assembly for a file
+src/fhe/circuits.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete.dir/build.make CMakeFiles/prifhete.dir/src/fhe/circuits.cpp.s
+.PHONY : src/fhe/circuits.cpp.s
 
 src/merkle/merkle_tree.o: src/merkle/merkle_tree.cpp.o
 .PHONY : src/merkle/merkle_tree.o
@@ -477,6 +514,30 @@ src/wkenc/wkenc.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete.dir/build.make CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.s
 .PHONY : src/wkenc/wkenc.cpp.s
 
+tests/test_bit_circuits.o: tests/test_bit_circuits.cpp.o
+.PHONY : tests/test_bit_circuits.o
+
+# target to build an object file
+tests/test_bit_circuits.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_bit_circuits_test.dir/build.make CMakeFiles/prifhete_bit_circuits_test.dir/tests/test_bit_circuits.cpp.o
+.PHONY : tests/test_bit_circuits.cpp.o
+
+tests/test_bit_circuits.i: tests/test_bit_circuits.cpp.i
+.PHONY : tests/test_bit_circuits.i
+
+# target to preprocess a source file
+tests/test_bit_circuits.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_bit_circuits_test.dir/build.make CMakeFiles/prifhete_bit_circuits_test.dir/tests/test_bit_circuits.cpp.i
+.PHONY : tests/test_bit_circuits.cpp.i
+
+tests/test_bit_circuits.s: tests/test_bit_circuits.cpp.s
+.PHONY : tests/test_bit_circuits.s
+
+# target to generate assembly for a file
+tests/test_bit_circuits.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_bit_circuits_test.dir/build.make CMakeFiles/prifhete_bit_circuits_test.dir/tests/test_bit_circuits.cpp.s
+.PHONY : tests/test_bit_circuits.cpp.s
+
 tests/test_plaintext_model.o: tests/test_plaintext_model.cpp.o
 .PHONY : tests/test_plaintext_model.o
 
@@ -535,6 +596,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... prifhete"
+	@echo "... prifhete_bit_circuits_test"
 	@echo "... prifhete_plaintext_model_test"
 	@echo "... prifhete_smoke_test"
 	@echo "... src/commit/commitment.o"
@@ -543,6 +605,9 @@ help:
 	@echo "... src/fhe/binfhe_context.o"
 	@echo "... src/fhe/binfhe_context.i"
 	@echo "... src/fhe/binfhe_context.s"
+	@echo "... src/fhe/circuits.o"
+	@echo "... src/fhe/circuits.i"
+	@echo "... src/fhe/circuits.s"
 	@echo "... src/merkle/merkle_tree.o"
 	@echo "... src/merkle/merkle_tree.i"
 	@echo "... src/merkle/merkle_tree.s"
@@ -576,6 +641,9 @@ help:
 	@echo "... src/wkenc/wkenc.o"
 	@echo "... src/wkenc/wkenc.i"
 	@echo "... src/wkenc/wkenc.s"
+	@echo "... tests/test_bit_circuits.o"
+	@echo "... tests/test_bit_circuits.i"
+	@echo "... tests/test_bit_circuits.s"
 	@echo "... tests/test_plaintext_model.o"
 	@echo "... tests/test_plaintext_model.i"
 	@echo "... tests/test_plaintext_model.s"

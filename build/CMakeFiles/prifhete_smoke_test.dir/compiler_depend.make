@@ -783,6 +783,7 @@ CMakeFiles/prifhete_smoke_test.dir/tests/test_smoke.cpp.o: /Users/varun/Document
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdint.h \
   /Users/varun/Documents/prifhete-openfhe/src/common/types.h \
   /Users/varun/Documents/prifhete-openfhe/src/fhe/binfhe_context.h \
+  /Users/varun/Documents/prifhete-openfhe/src/fhe/bit_value.h \
   /Users/varun/Documents/prifhete-openfhe/src/protocol/key_generation.h \
   /Users/varun/Documents/prifhete-openfhe/src/protocol/registration.h \
   /Users/varun/Documents/prifhete-openfhe/src/state/plaintext_model.h
@@ -2317,6 +2318,8 @@ CMakeFiles/prifhete_smoke_test.dir/tests/test_smoke.cpp.o: /Users/varun/Document
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__vector/pmr.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/comp_ref_type.h:
+
+/Users/varun/Documents/prifhete-openfhe/src/fhe/bit_value.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__atomic/atomic.h:
 

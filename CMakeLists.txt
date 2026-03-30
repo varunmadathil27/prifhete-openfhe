@@ -18,6 +18,7 @@ add_library(prifhete
     src/protocol/process_transaction.cpp
     src/protocol/update_ciphertext.cpp
     src/proof/proof_api.cpp
+    src/fhe/circuits.cpp
     src/fhe/binfhe_context.cpp
     src/wkenc/wkenc.cpp
     src/commit/commitment.cpp
@@ -48,4 +49,8 @@ if(PRIFHETE_BUILD_TESTS)
     add_executable(prifhete_plaintext_model_test tests/test_plaintext_model.cpp)
     target_link_libraries(prifhete_plaintext_model_test PRIVATE prifhete)
     add_test(NAME prifhete_plaintext_model_test COMMAND prifhete_plaintext_model_test)
+
+    add_executable(prifhete_bit_circuits_test tests/test_bit_circuits.cpp)
+    target_link_libraries(prifhete_bit_circuits_test PRIVATE prifhete)
+    add_test(NAME prifhete_bit_circuits_test COMMAND prifhete_bit_circuits_test)
 endif()

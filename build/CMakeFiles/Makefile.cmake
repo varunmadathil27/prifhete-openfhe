@@ -51,4 +51,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/prifhete.dir/DependInfo.cmake"
   "CMakeFiles/prifhete_smoke_test.dir/DependInfo.cmake"
   "CMakeFiles/prifhete_plaintext_model_test.dir/DependInfo.cmake"
+  "CMakeFiles/prifhete_bit_circuits_test.dir/DependInfo.cmake"
   )

@@ -1,0 +1,18 @@
+Start testing: Mar 30 14:30 PDT
+----------------------------------------------------------
+1/1 Testing: prifhete_smoke_test
+1/1 Test: prifhete_smoke_test
+Command: "/Users/varun/Documents/prifhete-openfhe/build/prifhete_smoke_test"
+Directory: /Users/varun/Documents/prifhete-openfhe/build
+"prifhete_smoke_test" start time: Mar 30 14:30 PDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.26 sec
+----------------------------------------------------------
+Test Passed.
+"prifhete_smoke_test" end time: Mar 30 14:30 PDT
+"prifhete_smoke_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Mar 30 14:30 PDT

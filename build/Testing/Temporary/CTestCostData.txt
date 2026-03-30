@@ -1,0 +1,2 @@
+prifhete_smoke_test 2 0.130091
+---

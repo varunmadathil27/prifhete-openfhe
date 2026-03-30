@@ -1,5 +1,6 @@
 /Users/varun/Documents/prifhete-openfhe/build/CMakeFiles/prifhete.dir
 /Users/varun/Documents/prifhete-openfhe/build/CMakeFiles/prifhete_smoke_test.dir
+/Users/varun/Documents/prifhete-openfhe/build/CMakeFiles/prifhete_plaintext_model_test.dir
 /Users/varun/Documents/prifhete-openfhe/build/CMakeFiles/test.dir
 /Users/varun/Documents/prifhete-openfhe/build/CMakeFiles/edit_cache.dir
 /Users/varun/Documents/prifhete-openfhe/build/CMakeFiles/rebuild_cache.dir

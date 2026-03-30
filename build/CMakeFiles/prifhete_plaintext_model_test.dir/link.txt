@@ -1,0 +1,1 @@
+/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/prifhete_plaintext_model_test.dir/tests/test_plaintext_model.cpp.o -o prifhete_plaintext_model_test  libprifhete.a

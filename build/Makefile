@@ -152,6 +152,19 @@ prifhete_smoke_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_smoke_test.dir/build.make CMakeFiles/prifhete_smoke_test.dir/build
 .PHONY : prifhete_smoke_test/fast
 
+#=============================================================================
+# Target rules for targets named prifhete_plaintext_model_test
+
+# Build rule for target.
+prifhete_plaintext_model_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 prifhete_plaintext_model_test
+.PHONY : prifhete_plaintext_model_test
+
+# fast build rule for target.
+prifhete_plaintext_model_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_plaintext_model_test.dir/build.make CMakeFiles/prifhete_plaintext_model_test.dir/build
+.PHONY : prifhete_plaintext_model_test/fast
+
 src/commit/commitment.o: src/commit/commitment.cpp.o
 .PHONY : src/commit/commitment.o
 
@@ -464,6 +477,30 @@ src/wkenc/wkenc.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete.dir/build.make CMakeFiles/prifhete.dir/src/wkenc/wkenc.cpp.s
 .PHONY : src/wkenc/wkenc.cpp.s
 
+tests/test_plaintext_model.o: tests/test_plaintext_model.cpp.o
+.PHONY : tests/test_plaintext_model.o
+
+# target to build an object file
+tests/test_plaintext_model.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_plaintext_model_test.dir/build.make CMakeFiles/prifhete_plaintext_model_test.dir/tests/test_plaintext_model.cpp.o
+.PHONY : tests/test_plaintext_model.cpp.o
+
+tests/test_plaintext_model.i: tests/test_plaintext_model.cpp.i
+.PHONY : tests/test_plaintext_model.i
+
+# target to preprocess a source file
+tests/test_plaintext_model.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_plaintext_model_test.dir/build.make CMakeFiles/prifhete_plaintext_model_test.dir/tests/test_plaintext_model.cpp.i
+.PHONY : tests/test_plaintext_model.cpp.i
+
+tests/test_plaintext_model.s: tests/test_plaintext_model.cpp.s
+.PHONY : tests/test_plaintext_model.s
+
+# target to generate assembly for a file
+tests/test_plaintext_model.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/prifhete_plaintext_model_test.dir/build.make CMakeFiles/prifhete_plaintext_model_test.dir/tests/test_plaintext_model.cpp.s
+.PHONY : tests/test_plaintext_model.cpp.s
+
 tests/test_smoke.o: tests/test_smoke.cpp.o
 .PHONY : tests/test_smoke.o
 
@@ -498,6 +535,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... prifhete"
+	@echo "... prifhete_plaintext_model_test"
 	@echo "... prifhete_smoke_test"
 	@echo "... src/commit/commitment.o"
 	@echo "... src/commit/commitment.i"
@@ -538,6 +576,9 @@ help:
 	@echo "... src/wkenc/wkenc.o"
 	@echo "... src/wkenc/wkenc.i"
 	@echo "... src/wkenc/wkenc.s"
+	@echo "... tests/test_plaintext_model.o"
+	@echo "... tests/test_plaintext_model.i"
+	@echo "... tests/test_plaintext_model.s"
 	@echo "... tests/test_smoke.o"
 	@echo "... tests/test_smoke.i"
 	@echo "... tests/test_smoke.s"

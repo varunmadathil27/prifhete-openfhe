@@ -44,4 +44,8 @@ if(PRIFHETE_BUILD_TESTS)
     add_executable(prifhete_smoke_test tests/test_smoke.cpp)
     target_link_libraries(prifhete_smoke_test PRIVATE prifhete)
     add_test(NAME prifhete_smoke_test COMMAND prifhete_smoke_test)
+
+    add_executable(prifhete_plaintext_model_test tests/test_plaintext_model.cpp)
+    target_link_libraries(prifhete_plaintext_model_test PRIVATE prifhete)
+    add_test(NAME prifhete_plaintext_model_test COMMAND prifhete_plaintext_model_test)
 endif()

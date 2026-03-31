@@ -32,12 +32,10 @@ target_include_directories(prifhete
 )
 
 target_compile_features(prifhete PUBLIC cxx_std_17)
-
-if(PRIFHETE_ENABLE_OPENFHE)
-    target_compile_definitions(prifhete PUBLIC PRIFHETE_ENABLE_OPENFHE=1)
-else()
-    target_compile_definitions(prifhete PUBLIC PRIFHETE_ENABLE_OPENFHE=0)
-endif()
+target_compile_definitions(prifhete
+    PUBLIC
+        PRIFHETE_ENABLE_OPENFHE=$<BOOL:${PRIFHETE_ENABLE_OPENFHE}>
+)
 
 if(PRIFHETE_BUILD_TESTS)
     enable_testing()

@@ -15,6 +15,8 @@ struct FullSubtracterResult {
     BitValue borrow_out;
 };
 
+// Equality on ciphertext bit vectors is needed for the paper's bit-wise checks,
+// including balance and state comparisons during future update work.
 BitValue EqualBitVectors(const BitBackend& backend,
                          const BitVector& lhs,
                          const BitVector& rhs);

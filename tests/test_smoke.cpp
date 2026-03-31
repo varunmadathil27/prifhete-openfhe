@@ -35,8 +35,13 @@ int main() {
 
     BinFHEContext context;
     const Status init_status = context.Initialize();
+#if PRIFHETE_ENABLE_OPENFHE
+    assert(init_status.ok);
+    assert(context.enabled());
+#else
     assert(!init_status.ok);
     assert(!context.enabled());
+#endif
 
     return 0;
 }

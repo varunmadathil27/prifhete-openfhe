@@ -1,10 +1,25 @@
 #include "fhe/circuits.h"
 
+#include <cassert>
+
 namespace prifhete {
+
+namespace {
+
+void AssertBitVectorBackend(const BitBackend& backend, const BitVector& bits) {
+    for (const BitValue& bit : bits) {
+        assert(bit.IsBackend(backend.kind()));
+    }
+}
+
+}  // namespace
 
 BitValue EqualBitVectors(const BitBackend& backend,
                          const BitVector& lhs,
                          const BitVector& rhs) {
+    AssertBitVectorBackend(backend, lhs);
+    AssertBitVectorBackend(backend, rhs);
+
     if (lhs.size() != rhs.size()) {
         return backend.Constant(false);
     }
@@ -19,6 +34,8 @@ BitValue EqualBitVectors(const BitBackend& backend,
 }
 
 BitValue ReduceAnd(const BitBackend& backend, const BitVector& bits) {
+    AssertBitVectorBackend(backend, bits);
+
     BitValue accumulated = backend.Constant(true);
     for (const BitValue& bit : bits) {
         accumulated = backend.And(accumulated, bit);
@@ -30,6 +47,10 @@ FullAdderResult FullAdder(const BitBackend& backend,
                           const BitValue& lhs,
                           const BitValue& rhs,
                           const BitValue& carry_in) {
+    assert(lhs.IsBackend(backend.kind()));
+    assert(rhs.IsBackend(backend.kind()));
+    assert(carry_in.IsBackend(backend.kind()));
+
     const BitValue lhs_xor_rhs = backend.Xor(lhs, rhs);
     const BitValue sum = backend.Xor(lhs_xor_rhs, carry_in);
 
@@ -45,6 +66,10 @@ FullSubtracterResult FullSubtracter(const BitBackend& backend,
                                     const BitValue& lhs,
                                     const BitValue& rhs,
                                     const BitValue& borrow_in) {
+    assert(lhs.IsBackend(backend.kind()));
+    assert(rhs.IsBackend(backend.kind()));
+    assert(borrow_in.IsBackend(backend.kind()));
+
     const BitValue lhs_xor_rhs = backend.Xor(lhs, rhs);
     const BitValue difference = backend.Xor(lhs_xor_rhs, borrow_in);
 

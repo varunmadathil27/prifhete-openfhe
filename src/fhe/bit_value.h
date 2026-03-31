@@ -22,21 +22,35 @@ public:
         return BitValue(BitBackendKind::kFake, value, nullptr);
     }
 
-    static BitValue BinFHEPlaceholder() {
-        return BitValue(BitBackendKind::kBinFHE, false, nullptr);
+    static BitValue BinFHEPlaceholder(
+        std::shared_ptr<const void> opaque_payload = nullptr) {
+        return BitValue(BitBackendKind::kBinFHE, false,
+                        std::move(opaque_payload));
     }
 
     BitBackendKind backend() const {
         return backend_;
     }
 
+    bool IsBackend(BitBackendKind backend) const {
+        return backend_ == backend;
+    }
+
     bool IsFake() const {
         return backend_ == BitBackendKind::kFake;
+    }
+
+    bool IsBinFHE() const {
+        return backend_ == BitBackendKind::kBinFHE;
     }
 
     bool fake_value() const {
         assert(IsFake());
         return fake_value_;
+    }
+
+    bool has_opaque_payload() const {
+        return opaque_payload_ != nullptr;
     }
 
 private:
@@ -76,25 +90,25 @@ public:
     }
 
     BitValue Xor(const BitValue& lhs, const BitValue& rhs) const override {
-        assert(lhs.IsFake());
-        assert(rhs.IsFake());
+        assert(lhs.IsBackend(kind()));
+        assert(rhs.IsBackend(kind()));
         return BitValue::Fake(lhs.fake_value() != rhs.fake_value());
     }
 
     BitValue And(const BitValue& lhs, const BitValue& rhs) const override {
-        assert(lhs.IsFake());
-        assert(rhs.IsFake());
+        assert(lhs.IsBackend(kind()));
+        assert(rhs.IsBackend(kind()));
         return BitValue::Fake(lhs.fake_value() && rhs.fake_value());
     }
 
     BitValue Or(const BitValue& lhs, const BitValue& rhs) const override {
-        assert(lhs.IsFake());
-        assert(rhs.IsFake());
+        assert(lhs.IsBackend(kind()));
+        assert(rhs.IsBackend(kind()));
         return BitValue::Fake(lhs.fake_value() || rhs.fake_value());
     }
 
     BitValue Not(const BitValue& input) const override {
-        assert(input.IsFake());
+        assert(input.IsBackend(kind()));
         return BitValue::Fake(!input.fake_value());
     }
 };

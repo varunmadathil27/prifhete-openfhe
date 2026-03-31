@@ -1,6 +1,8 @@
 #ifndef PRIFHETE_FHE_BINFHE_CONTEXT_H
 #define PRIFHETE_FHE_BINFHE_CONTEXT_H
 
+#include <memory>
+
 #include "common/types.h"
 #include "fhe/bit_value.h"
 
@@ -9,6 +11,7 @@ namespace prifhete {
 class BinFHEContext final : public BitBackend {
 public:
     BinFHEContext();
+    ~BinFHEContext();
 
     bool enabled() const;
     Status Initialize();
@@ -21,6 +24,8 @@ public:
     BitValue Not(const BitValue& input) const override;
 
 private:
+    struct Impl;
+    std::unique_ptr<Impl> impl_;
     bool enabled_ = false;
 };
 

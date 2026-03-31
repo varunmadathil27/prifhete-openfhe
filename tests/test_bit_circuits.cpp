@@ -35,6 +35,9 @@ BitVector BitsFromMask(std::size_t width, std::size_t mask) {
 
 void TestPrimitiveTruthTables() {
     const FakeBitContext backend;
+    assert(ReadFakeBit(backend.Constant(false)) == false);
+    assert(ReadFakeBit(backend.Constant(true)) == true);
+
     for (int lhs = 0; lhs <= 1; ++lhs) {
         for (int rhs = 0; rhs <= 1; ++rhs) {
             const BitValue left = MakeFakeBit(lhs != 0);
@@ -125,9 +128,36 @@ void TestFullSubtracterTruthTable() {
 void TestBinFHEPlaceholderSurface() {
     prifhete::BinFHEContext context;
     const prifhete::Status status = context.Initialize();
+    assert(context.kind() == prifhete::BitBackendKind::kBinFHE);
+
+#if PRIFHETE_ENABLE_OPENFHE
+    assert(status.ok);
+    assert(context.enabled());
+
+    const BitValue zero = context.Constant(false);
+    const BitValue one = context.Constant(true);
+    assert(zero.IsBinFHE());
+    assert(one.IsBinFHE());
+    assert(zero.has_opaque_payload());
+    assert(one.has_opaque_payload());
+
+    const BitValue xor_result = context.Xor(zero, one);
+    const BitValue and_result = context.And(zero, one);
+    const BitValue or_result = context.Or(zero, one);
+    const BitValue not_result = context.Not(zero);
+
+    assert(xor_result.IsBinFHE());
+    assert(and_result.IsBinFHE());
+    assert(or_result.IsBinFHE());
+    assert(not_result.IsBinFHE());
+    assert(xor_result.has_opaque_payload());
+    assert(and_result.has_opaque_payload());
+    assert(or_result.has_opaque_payload());
+    assert(not_result.has_opaque_payload());
+#else
     assert(!status.ok);
     assert(!context.enabled());
-    assert(context.kind() == prifhete::BitBackendKind::kBinFHE);
+#endif
 }
 
 }  // namespace

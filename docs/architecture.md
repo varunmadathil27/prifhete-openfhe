@@ -37,10 +37,15 @@ The plaintext model currently supports:
 - private transfer between registered accounts
 - explicit epoch advancement
 - duplicate `PRFOutput` rejection within the current epoch
-- placeholder Merkle-root version tracking for transaction references
+- typed placeholder root-version tracking for transaction references
 
-The root representation is a deterministic placeholder string encoded into
-`MerkleRoot.bytes`:
+Transactions reference a strongly typed root handle containing:
+
+- `MerkleRoot root`
+- `EpochNumber epoch`
+- `RootVersion version`
+
+The `MerkleRoot.bytes` payload is still a deterministic placeholder string:
 
 - `plaintext-root:e<epoch>:v<root_version>`
 
@@ -52,10 +57,17 @@ tree and authentication path logic exist.
 
 - Each registered account receives a stable `AccountIndex`.
 - Balances are stored in plaintext and updated exactly by mint and transfer.
-- Every successful state transition produces a new placeholder root version.
+- Every successful state transition, including epoch advance, produces a new
+  placeholder root version.
+- The oracle tracks every root generated in the current epoch so transactions
+  can reference any current-epoch root version, not only the latest one.
 - Roots remain valid only inside the configured epoch window used by the oracle.
 - A `PRFOutput` may be used at most once per epoch.
-- Failed transactions do not mutate balances, root state, or PRF replay state.
+- Failed transactions do not mutate balances, root state, or `PRFOutput`
+  replay state.
+- Root references are rejected if the root is unknown, stale, or carries
+  mismatched epoch/version metadata for the encoded placeholder root.
+- Invalid account references and overspends are rejected before state mutation.
 
 ## Current Status
 

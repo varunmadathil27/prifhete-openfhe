@@ -1,4 +1,4 @@
-prifhete_smoke_test 10 0.0007235
-prifhete_plaintext_model_test 6 0.000611944
-prifhete_bit_circuits_test 4 0.000792552
+prifhete_smoke_test 11 0.000648417
+prifhete_plaintext_model_test 7 0.000458845
+prifhete_bit_circuits_test 5 0.000682767
 ---

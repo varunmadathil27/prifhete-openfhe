@@ -5,9 +5,9 @@
 #include <cstdint>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
-#include <unordered_map>
 
 #include "common/types.h"
 
@@ -27,6 +27,34 @@ public:
         }
     };
 
+    struct RootVersion {
+        std::uint64_t value = 0;
+
+        bool operator==(const RootVersion& other) const {
+            return value == other.value;
+        }
+
+        bool operator!=(const RootVersion& other) const {
+            return !(*this == other);
+        }
+    };
+
+    struct RootReference {
+        MerkleRoot root;
+        EpochNumber epoch = 0;
+        RootVersion version;
+
+        bool operator==(const RootReference& other) const {
+            return root.bytes == other.root.bytes &&
+                   epoch == other.epoch &&
+                   version == other.version;
+        }
+
+        bool operator!=(const RootReference& other) const {
+            return !(*this == other);
+        }
+    };
+
     struct RegistrationRequest {
         std::string account_id;
         PrivateAccountPK public_key;
@@ -35,7 +63,7 @@ public:
     struct RegistrationResult {
         AccountIndex account_index;
         PrivateAccountEntry entry;
-        MerkleRoot root;
+        RootReference root;
         Status status;
     };
 
@@ -44,11 +72,11 @@ public:
         AccountIndex recipient_index;
         std::uint64_t value = 0;
         PRFOutput prf_output;
-        MerkleRoot referenced_root;
+        RootReference referenced_root;
     };
 
     struct MintResult {
-        MerkleRoot root;
+        RootReference root;
         std::uint64_t recipient_balance = 0;
         Status status;
     };
@@ -59,11 +87,11 @@ public:
         AccountIndex receiver_index;
         std::uint64_t value = 0;
         PRFOutput prf_output;
-        MerkleRoot referenced_root;
+        RootReference referenced_root;
     };
 
     struct TransferResult {
-        MerkleRoot root;
+        RootReference root;
         std::uint64_t sender_balance = 0;
         std::uint64_t receiver_balance = 0;
         Status status;
@@ -71,9 +99,9 @@ public:
 
     struct EpochStateView {
         EpochNumber current_epoch = 0;
-        std::uint64_t root_version = 0;
-        MerkleRoot current_root;
-        std::size_t valid_root_count = 0;
+        RootVersion current_root_version;
+        RootReference current_root;
+        std::size_t accepted_prf_output_count = 0;
         std::size_t used_prf_output_count = 0;
     };
 
@@ -95,10 +123,14 @@ public:
     Status AdvanceToEpoch(EpochNumber epoch);
 
     bool TryGetBalance(AccountIndex account_index, std::uint64_t* balance) const;
+    std::optional<std::uint64_t> InspectBalance(AccountIndex account_index) const;
     std::uint64_t account_count() const;
     MerkleRoot current_root() const;
-    bool IsValidRoot(const MerkleRoot& root) const;
+    RootReference current_root_reference() const;
+    bool IsValidRoot(const RootReference& root) const;
     bool HasSeenPrfOutputInCurrentEpoch(const PRFOutput& prf_output) const;
+    std::vector<PRFOutput> accepted_prf_outputs() const;
+    std::vector<RootReference> current_root_versions() const;
     EpochStateView InspectEpochState() const;
 
     EpochNumber current_epoch() const;
@@ -110,25 +142,34 @@ private:
         std::uint64_t balance = 0;
     };
 
+    struct RootRecord {
+        RootReference reference;
+    };
+
     static constexpr EpochNumber kRootValidityWindow = 1;
 
     Status ValidateAccountId(const std::string& account_id) const;
-    bool IsRootAcceptableForCurrentEpoch(EpochNumber root_epoch) const;
-    Status ValidateReferencedRoot(const MerkleRoot& root) const;
+    Status ValidateTransactionId(const std::string& transaction_id) const;
+    bool IsRootAcceptableForCurrentEpoch(const RootReference& root) const;
+    Status ValidateReferencedRoot(const RootReference& root) const;
     Status ValidateFreshPrfOutput(const PRFOutput& prf_output) const;
     Status RecordPrfOutput(const PRFOutput& prf_output);
     Status ApplyEpochTransition(EpochNumber epoch);
-    MerkleRoot MakeRoot(EpochNumber epoch, std::uint64_t root_version) const;
+    RootReference AllocateNextRoot();
+    void RefreshAllAccountRoots();
+    MerkleRoot MakeRoot(EpochNumber epoch, RootVersion root_version) const;
     static std::string ToKey(const ByteString& bytes);
 
     std::unordered_map<std::string, PrivateAccountEntry> accounts_;
     std::vector<AccountState> account_states_;
     std::unordered_map<std::string, std::size_t> account_indices_;
-    std::unordered_map<std::string, EpochNumber> valid_roots_;
+    std::unordered_map<std::string, RootRecord> valid_roots_;
+    std::vector<std::string> current_epoch_root_keys_;
     std::unordered_set<std::string> prf_outputs_in_current_epoch_;
+    std::vector<PRFOutput> accepted_prf_outputs_in_current_epoch_;
     EpochNumber current_epoch_ = 0;
-    std::uint64_t root_version_ = 0;
-    MerkleRoot current_root_;
+    RootVersion root_version_;
+    RootReference current_root_;
 };
 
 }  // namespace prifhete

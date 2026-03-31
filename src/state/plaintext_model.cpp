@@ -1,5 +1,6 @@
 #include "state/plaintext_model.h"
 
+#include <algorithm>
 #include <limits>
 #include <sstream>
 
@@ -12,8 +13,7 @@ constexpr std::size_t kInvalidIndexValue = static_cast<std::size_t>(-1);
 }  // namespace
 
 PlaintextModel::PlaintextModel() {
-    current_root_ = MakeRoot(current_epoch_, root_version_);
-    valid_roots_.emplace(ToKey(current_root_.bytes), current_epoch_);
+    current_root_ = AllocateNextRoot();
 }
 
 bool PlaintextModel::HasAccount(const std::string& account_id) const {
@@ -23,6 +23,14 @@ bool PlaintextModel::HasAccount(const std::string& account_id) const {
 Status PlaintextModel::ValidateAccountId(const std::string& account_id) const {
     if (account_id.empty()) {
         return Status{false, "account_id must not be empty"};
+    }
+    return OkStatus();
+}
+
+Status PlaintextModel::ValidateTransactionId(
+    const std::string& transaction_id) const {
+    if (transaction_id.empty()) {
+        return Status{false, "transaction_id must not be empty"};
     }
     return OkStatus();
 }
@@ -41,11 +49,8 @@ Status PlaintextModel::UpsertAccount(const PrivateAccountEntry& entry) {
         return OkStatus();
     }
 
-    AccountState state;
-    state.entry = entry;
-
     const std::size_t index = account_states_.size();
-    account_states_.push_back(state);
+    account_states_.push_back(AccountState{entry, 0});
     account_indices_[entry.account_id] = index;
     accounts_[entry.account_id] = entry;
     return OkStatus();
@@ -111,13 +116,9 @@ PlaintextModel::RegistrationResult PlaintextModel::Register(
     const std::size_t index = account_states_.size();
     account_states_.push_back(AccountState{entry, 0});
     account_indices_[entry.account_id] = index;
-    accounts_[entry.account_id] = entry;
 
-    ++root_version_;
-    current_root_ = MakeRoot(current_epoch_, root_version_);
-    valid_roots_.emplace(ToKey(current_root_.bytes), current_epoch_);
-    account_states_[index].entry.inclusion_root = current_root_;
-    accounts_[entry.account_id] = account_states_[index].entry;
+    current_root_ = AllocateNextRoot();
+    RefreshAllAccountRoots();
 
     return RegistrationResult{
         AccountIndex{index},
@@ -127,21 +128,28 @@ PlaintextModel::RegistrationResult PlaintextModel::Register(
     };
 }
 
-bool PlaintextModel::IsRootAcceptableForCurrentEpoch(EpochNumber root_epoch) const {
-    if (root_epoch > current_epoch_) {
+bool PlaintextModel::IsRootAcceptableForCurrentEpoch(
+    const RootReference& root) const {
+    if (root.epoch > current_epoch_) {
         return false;
     }
-    return current_epoch_ - root_epoch <= kRootValidityWindow;
+    return current_epoch_ - root.epoch <= kRootValidityWindow;
 }
 
-Status PlaintextModel::ValidateReferencedRoot(const MerkleRoot& root) const {
-    const auto iter = valid_roots_.find(ToKey(root.bytes));
+Status PlaintextModel::ValidateReferencedRoot(const RootReference& root) const {
+    const auto iter = valid_roots_.find(ToKey(root.root.bytes));
     if (iter == valid_roots_.end()) {
         return Status{false, "referenced_root is not known"};
     }
-    if (!IsRootAcceptableForCurrentEpoch(iter->second)) {
+
+    if (iter->second.reference != root) {
+        return Status{false, "referenced_root metadata mismatch"};
+    }
+
+    if (!IsRootAcceptableForCurrentEpoch(root)) {
         return Status{false, "referenced_root is stale"};
     }
+
     return OkStatus();
 }
 
@@ -160,10 +168,16 @@ Status PlaintextModel::RecordPrfOutput(const PRFOutput& prf_output) {
     }
 
     prf_outputs_in_current_epoch_.insert(ToKey(prf_output.bytes));
+    accepted_prf_outputs_in_current_epoch_.push_back(prf_output);
     return OkStatus();
 }
 
 PlaintextModel::MintResult PlaintextModel::Mint(const PublicToPrivateMint& mint) {
+    const Status transaction_id_status = ValidateTransactionId(mint.transaction_id);
+    if (!transaction_id_status.ok) {
+        return MintResult{current_root_, 0, transaction_id_status};
+    }
+
     if (!IsValidAccountIndex(mint.recipient_index)) {
         return MintResult{current_root_, 0, Status{false, "invalid recipient account index"}};
     }
@@ -183,20 +197,21 @@ PlaintextModel::MintResult PlaintextModel::Mint(const PublicToPrivateMint& mint)
     if (!record_status.ok) {
         return MintResult{current_root_, recipient.balance, record_status};
     }
-    recipient.balance += mint.value;
-    recipient.entry.epoch = current_epoch_;
 
-    ++root_version_;
-    current_root_ = MakeRoot(current_epoch_, root_version_);
-    valid_roots_[ToKey(current_root_.bytes)] = current_epoch_;
-    recipient.entry.inclusion_root = current_root_;
-    accounts_[recipient.entry.account_id] = recipient.entry;
+    recipient.balance += mint.value;
+    current_root_ = AllocateNextRoot();
+    RefreshAllAccountRoots();
 
     return MintResult{current_root_, recipient.balance, OkStatus()};
 }
 
 PlaintextModel::TransferResult PlaintextModel::Transfer(
     const PrivateTransfer& transfer) {
+    const Status transaction_id_status = ValidateTransactionId(transfer.transaction_id);
+    if (!transaction_id_status.ok) {
+        return TransferResult{current_root_, 0, 0, transaction_id_status};
+    }
+
     if (!IsValidAccountIndex(transfer.sender_index)) {
         return TransferResult{
             current_root_,
@@ -247,16 +262,8 @@ PlaintextModel::TransferResult PlaintextModel::Transfer(
 
     sender.balance -= transfer.value;
     receiver.balance += transfer.value;
-    sender.entry.epoch = current_epoch_;
-    receiver.entry.epoch = current_epoch_;
-
-    ++root_version_;
-    current_root_ = MakeRoot(current_epoch_, root_version_);
-    valid_roots_[ToKey(current_root_.bytes)] = current_epoch_;
-    sender.entry.inclusion_root = current_root_;
-    receiver.entry.inclusion_root = current_root_;
-    accounts_[sender.entry.account_id] = sender.entry;
-    accounts_[receiver.entry.account_id] = receiver.entry;
+    current_root_ = AllocateNextRoot();
+    RefreshAllAccountRoots();
 
     return TransferResult{
         current_root_,
@@ -269,16 +276,11 @@ PlaintextModel::TransferResult PlaintextModel::Transfer(
 Status PlaintextModel::ApplyEpochTransition(EpochNumber epoch) {
     current_epoch_ = epoch;
     prf_outputs_in_current_epoch_.clear();
+    accepted_prf_outputs_in_current_epoch_.clear();
+    current_epoch_root_keys_.clear();
 
-    ++root_version_;
-    current_root_ = MakeRoot(current_epoch_, root_version_);
-    valid_roots_[ToKey(current_root_.bytes)] = current_epoch_;
-
-    for (AccountState& state : account_states_) {
-        state.entry.epoch = current_epoch_;
-        state.entry.inclusion_root = current_root_;
-        accounts_[state.entry.account_id] = state.entry;
-    }
+    current_root_ = AllocateNextRoot();
+    RefreshAllAccountRoots();
 
     return OkStatus();
 }
@@ -313,36 +315,58 @@ bool PlaintextModel::TryGetBalance(AccountIndex account_index,
     return true;
 }
 
+std::optional<std::uint64_t> PlaintextModel::InspectBalance(
+    AccountIndex account_index) const {
+    if (!IsValidAccountIndex(account_index)) {
+        return std::nullopt;
+    }
+    return account_states_[account_index.value].balance;
+}
+
 std::uint64_t PlaintextModel::account_count() const {
     return static_cast<std::uint64_t>(account_states_.size());
 }
 
 MerkleRoot PlaintextModel::current_root() const {
+    return current_root_.root;
+}
+
+PlaintextModel::RootReference PlaintextModel::current_root_reference() const {
     return current_root_;
 }
 
-bool PlaintextModel::IsValidRoot(const MerkleRoot& root) const {
+bool PlaintextModel::IsValidRoot(const RootReference& root) const {
     return ValidateReferencedRoot(root).ok;
 }
 
-bool PlaintextModel::HasSeenPrfOutputInCurrentEpoch(const PRFOutput& prf_output) const {
+bool PlaintextModel::HasSeenPrfOutputInCurrentEpoch(
+    const PRFOutput& prf_output) const {
     return prf_outputs_in_current_epoch_.find(ToKey(prf_output.bytes)) !=
            prf_outputs_in_current_epoch_.end();
 }
 
-PlaintextModel::EpochStateView PlaintextModel::InspectEpochState() const {
-    std::size_t valid_root_count = 0;
-    for (const auto& entry : valid_roots_) {
-        if (IsRootAcceptableForCurrentEpoch(entry.second)) {
-            ++valid_root_count;
+std::vector<PRFOutput> PlaintextModel::accepted_prf_outputs() const {
+    return accepted_prf_outputs_in_current_epoch_;
+}
+
+std::vector<PlaintextModel::RootReference> PlaintextModel::current_root_versions() const {
+    std::vector<RootReference> roots;
+    roots.reserve(current_epoch_root_keys_.size());
+    for (const std::string& key : current_epoch_root_keys_) {
+        const auto iter = valid_roots_.find(key);
+        if (iter != valid_roots_.end()) {
+            roots.push_back(iter->second.reference);
         }
     }
+    return roots;
+}
 
+PlaintextModel::EpochStateView PlaintextModel::InspectEpochState() const {
     return EpochStateView{
         current_epoch_,
-        root_version_,
+        current_root_.version,
         current_root_,
-        valid_root_count,
+        accepted_prf_outputs_in_current_epoch_.size(),
         prf_outputs_in_current_epoch_.size()
     };
 }
@@ -352,13 +376,17 @@ EpochNumber PlaintextModel::current_epoch() const {
 }
 
 void PlaintextModel::set_current_epoch(EpochNumber epoch) {
+    if (epoch == current_epoch_) {
+        return;
+    }
+
     if (epoch < current_epoch_) {
         current_epoch_ = epoch;
         prf_outputs_in_current_epoch_.clear();
-        valid_roots_.clear();
-        ++root_version_;
-        current_root_ = MakeRoot(current_epoch_, root_version_);
-        valid_roots_[ToKey(current_root_.bytes)] = current_epoch_;
+        accepted_prf_outputs_in_current_epoch_.clear();
+        current_epoch_root_keys_.clear();
+        current_root_ = AllocateNextRoot();
+        RefreshAllAccountRoots();
         return;
     }
 
@@ -368,10 +396,33 @@ void PlaintextModel::set_current_epoch(EpochNumber epoch) {
     }
 }
 
+PlaintextModel::RootReference PlaintextModel::AllocateNextRoot() {
+    ++root_version_.value;
+
+    RootReference next_root;
+    next_root.epoch = current_epoch_;
+    next_root.version = root_version_;
+    next_root.root = MakeRoot(current_epoch_, root_version_);
+
+    const std::string key = ToKey(next_root.root.bytes);
+    valid_roots_[key] = RootRecord{next_root};
+    current_epoch_root_keys_.push_back(key);
+    current_root_ = next_root;
+    return next_root;
+}
+
+void PlaintextModel::RefreshAllAccountRoots() {
+    for (AccountState& state : account_states_) {
+        state.entry.epoch = current_epoch_;
+        state.entry.inclusion_root = current_root_.root;
+        accounts_[state.entry.account_id] = state.entry;
+    }
+}
+
 MerkleRoot PlaintextModel::MakeRoot(EpochNumber epoch,
-                                    std::uint64_t root_version) const {
+                                    RootVersion root_version) const {
     std::ostringstream out;
-    out << "plaintext-root:e" << epoch << ":v" << root_version;
+    out << "plaintext-root:e" << epoch << ":v" << root_version.value;
 
     const std::string encoded = out.str();
     return MerkleRoot{ByteString(encoded.begin(), encoded.end())};

@@ -1,0 +1,7 @@
+/Users/varun/.codex/worktrees/520c/prifhete-openfhe/build-codex/CMakeFiles/prifhete.dir
+/Users/varun/.codex/worktrees/520c/prifhete-openfhe/build-codex/CMakeFiles/prifhete_smoke_test.dir
+/Users/varun/.codex/worktrees/520c/prifhete-openfhe/build-codex/CMakeFiles/prifhete_plaintext_model_test.dir
+/Users/varun/.codex/worktrees/520c/prifhete-openfhe/build-codex/CMakeFiles/prifhete_bit_circuits_test.dir
+/Users/varun/.codex/worktrees/520c/prifhete-openfhe/build-codex/CMakeFiles/test.dir
+/Users/varun/.codex/worktrees/520c/prifhete-openfhe/build-codex/CMakeFiles/edit_cache.dir
+/Users/varun/.codex/worktrees/520c/prifhete-openfhe/build-codex/CMakeFiles/rebuild_cache.dir
